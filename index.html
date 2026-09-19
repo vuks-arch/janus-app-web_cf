@@ -48,36 +48,52 @@
   }
   nav ul a:hover{opacity:1;text-decoration:underline}
 
-  /* Hero */
+  /* Hero / Banner slider */
   .hero{
     position:relative;
     text-align:center;
     padding:110px 24px 96px;
     color:#fdf8f1;
     overflow:hidden;
-    background:
-      linear-gradient(180deg,rgba(30,20,14,.55) 0%,rgba(30,20,14,.72) 60%,rgba(30,20,14,.85) 100%),
-      radial-gradient(circle at 20% 30%,rgba(169,116,79,.55),transparent 55%),
-      radial-gradient(circle at 80% 70%,rgba(111,78,55,.6),transparent 55%),
-      linear-gradient(135deg,#4a3226 0%,#6f4e37 45%,#3b2a20 100%);
+    background:#3b2a20;
   }
-  .hero::before{
+  .hero .slides{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .hero .slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    background-size:cover;
+    background-position:center;
+    animation:slideFade 36s infinite;
+  }
+  .hero .slide:nth-child(1){animation-delay:0s}
+  .hero .slide:nth-child(2){animation-delay:6s}
+  .hero .slide:nth-child(3){animation-delay:12s}
+  .hero .slide:nth-child(4){animation-delay:18s}
+  .hero .slide:nth-child(5){animation-delay:24s}
+  .hero .slide:nth-child(6){animation-delay:30s}
+  @keyframes slideFade{
+    0%{opacity:0}
+    2%{opacity:1}
+    14.66%{opacity:1}
+    16.66%{opacity:0}
+    100%{opacity:0}
+  }
+  .hero::after{
     content:"";
     position:absolute;
     inset:0;
-    background-image:
-      radial-gradient(circle at 12% 22%,rgba(255,255,255,.08) 0 2px,transparent 3px),
-      radial-gradient(circle at 32% 68%,rgba(255,255,255,.06) 0 2px,transparent 3px),
-      radial-gradient(circle at 58% 18%,rgba(255,255,255,.07) 0 2px,transparent 3px),
-      radial-gradient(circle at 78% 52%,rgba(255,255,255,.06) 0 2px,transparent 3px),
-      radial-gradient(circle at 92% 82%,rgba(255,255,255,.08) 0 2px,transparent 3px);
-    background-size:220px 220px;
-    opacity:.7;
+    z-index:1;
+    background:linear-gradient(180deg,rgba(30,20,14,.55) 0%,rgba(30,20,14,.72) 60%,rgba(30,20,14,.85) 100%);
     pointer-events:none;
   }
   .hero-inner{
     position:relative;
-    z-index:1;
+    z-index:2;
     max-width:760px;
     margin:0 auto;
   }
@@ -130,9 +146,14 @@
 
   /* Sections */
   section{
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:72px 32px;
+  }
+  .section-inner{
     max-width:1200px;
     margin:0 auto;
-    padding:72px 32px;
   }
   section h2{
     font-size:30px;
@@ -345,6 +366,14 @@
 </nav>
 
 <header class="hero">
+  <div class="slides">
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1600&q=80')"></div>
+  </div>
   <div class="hero-inner">
     <span class="eyebrow">Small-Batch Roastery</span>
     <h1>Ember &amp; Oak</h1>
@@ -354,118 +383,126 @@
 </header>
 
 <section id="menu">
-  <div class="menu">
-    <h2>Menu</h2>
-    <ul class="menu-list">
-      <li>
-        <span class="name">Espresso
-          <span class="desc">Double shot, rich and velvety</span>
-        </span>
-        <span class="price">$3.00</span>
-      </li>
-      <li>
-        <span class="name">Flat White
-          <span class="desc">Silky microfoam over a ristretto base</span>
-        </span>
-        <span class="price">$4.25</span>
-      </li>
-      <li>
-        <span class="name">Cappuccino
-          <span class="desc">Classic balance of espresso and foam</span>
-        </span>
-        <span class="price">$4.00</span>
-      </li>
-      <li>
-        <span class="name">Cold Brew
-          <span class="desc">Steeped 18 hours, served over ice</span>
-        </span>
-        <span class="price">$4.75</span>
-      </li>
-      <li>
-        <span class="name">Caramel Latte
-          <span class="desc">House caramel, steamed milk, espresso</span>
-        </span>
-        <span class="price">$5.00</span>
-      </li>
-      <li>
-        <span class="name">Pour Over
-          <span class="desc">Single-origin, brewed to order</span>
-        </span>
-        <span class="price">$4.50</span>
-      </li>
-    </ul>
+  <div class="section-inner">
+    <div class="menu">
+      <h2>Menu</h2>
+      <ul class="menu-list">
+        <li>
+          <span class="name">Espresso
+            <span class="desc">Double shot, rich and velvety</span>
+          </span>
+          <span class="price">$3.00</span>
+        </li>
+        <li>
+          <span class="name">Flat White
+            <span class="desc">Silky microfoam over a ristretto base</span>
+          </span>
+          <span class="price">$4.25</span>
+        </li>
+        <li>
+          <span class="name">Cappuccino
+            <span class="desc">Classic balance of espresso and foam</span>
+          </span>
+          <span class="price">$4.00</span>
+        </li>
+        <li>
+          <span class="name">Cold Brew
+            <span class="desc">Steeped 18 hours, served over ice</span>
+          </span>
+          <span class="price">$4.75</span>
+        </li>
+        <li>
+          <span class="name">Caramel Latte
+            <span class="desc">House caramel, steamed milk, espresso</span>
+          </span>
+          <span class="price">$5.00</span>
+        </li>
+        <li>
+          <span class="name">Pour Over
+            <span class="desc">Single-origin, brewed to order</span>
+          </span>
+          <span class="price">$4.50</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <section id="subscriptions">
-  <h2>Subscription Plans</h2>
-  <p class="subs-intro">Never run out of great coffee. Choose a plan and we'll take care of the rest — fresh beans delivered on your schedule, or a monthly pass for unlimited drinks at the counter. Pause or cancel anytime.</p>
-  <div class="plans">
-    <div class="plan">
-      <span class="tag">Beans</span>
-      <h3>Roaster's Club</h3>
-      <p class="price-line"><span class="amount">$18</span><span class="per">/ month</span></p>
-      <ul>
-        <li>One 12oz bag of fresh-roasted beans</li>
-        <li>Rotating single-origin selection</li>
-        <li>Free local delivery</li>
-        <li>Pause or skip any month</li>
-      </ul>
-      <a class="btn" href="#contact">Subscribe</a>
+  <div class="section-inner">
+    <h2>Subscription Plans</h2>
+    <p class="subs-intro">Never run out of great coffee. Choose a plan and we'll take care of the rest — fresh beans delivered on your schedule, or a monthly pass for unlimited drinks at the counter. Pause or cancel anytime.</p>
+    <div class="plans">
+      <div class="plan">
+        <span class="tag">Beans</span>
+        <h3>Roaster's Club</h3>
+        <p class="price-line"><span class="amount">$18</span><span class="per">/ month</span></p>
+        <ul>
+          <li>One 12oz bag of fresh-roasted beans</li>
+          <li>Rotating single-origin selection</li>
+          <li>Free local delivery</li>
+          <li>Pause or skip any month</li>
+        </ul>
+        <a class="btn" href="#contact">Subscribe</a>
+      </div>
+      <div class="plan featured">
+        <span class="tag">Most Popular</span>
+        <h3>Daily Pour Pass</h3>
+        <p class="price-line"><span class="amount">$45</span><span class="per">/ month</span></p>
+        <ul>
+          <li>One free drip or pour over every day</li>
+          <li>10% off all other drinks</li>
+          <li>Priority morning pickup line</li>
+          <li>Members-only tasting invites</li>
+        </ul>
+        <a class="btn" href="#contact">Subscribe</a>
+      </div>
+      <div class="plan">
+        <span class="tag">Beans + Drinks</span>
+        <h3>Ember &amp; Oak Reserve</h3>
+        <p class="price-line"><span class="amount">$65</span><span class="per">/ month</span></p>
+        <ul>
+          <li>Two 12oz bags of beans monthly</li>
+          <li>Unlimited drip coffee in-store</li>
+          <li>15% off all other drinks</li>
+          <li>Free brew gear loan &amp; classes</li>
+        </ul>
+        <a class="btn" href="#contact">Subscribe</a>
+      </div>
     </div>
-    <div class="plan featured">
-      <span class="tag">Most Popular</span>
-      <h3>Daily Pour Pass</h3>
-      <p class="price-line"><span class="amount">$45</span><span class="per">/ month</span></p>
-      <ul>
-        <li>One free drip or pour over every day</li>
-        <li>10% off all other drinks</li>
-        <li>Priority morning pickup line</li>
-        <li>Members-only tasting invites</li>
-      </ul>
-      <a class="btn" href="#contact">Subscribe</a>
-    </div>
-    <div class="plan">
-      <span class="tag">Beans + Drinks</span>
-      <h3>Ember &amp; Oak Reserve</h3>
-      <p class="price-line"><span class="amount">$65</span><span class="per">/ month</span></p>
-      <ul>
-        <li>Two 12oz bags of beans monthly</li>
-        <li>Unlimited drip coffee in-store</li>
-        <li>15% off all other drinks</li>
-        <li>Free brew gear loan &amp; classes</li>
-      </ul>
-      <a class="btn" href="#contact">Subscribe</a>
-    </div>
+    <p class="subs-note">All plans renew monthly and can be paused, upgraded, or cancelled anytime from your account.</p>
   </div>
-  <p class="subs-note">All plans renew monthly and can be paused, upgraded, or cancelled anytime from your account.</p>
 </section>
 
 <section id="gallery">
-  <h2>Gallery</h2>
-  <div class="gallery">
-    <div>Roastery</div>
-    <div>Latte Art</div>
-    <div>The Counter</div>
-    <div>Morning Light</div>
-    <div>Beans</div>
-    <div>Cozy Corner</div>
+  <div class="section-inner">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <div>Roastery</div>
+      <div>Latte Art</div>
+      <div>The Counter</div>
+      <div>Morning Light</div>
+      <div>Beans</div>
+      <div>Cozy Corner</div>
+    </div>
   </div>
 </section>
 
 <section id="contact">
-  <div class="contact">
-    <h2>Visit Us</h2>
-    <div class="contact-grid">
-      <div>
-        <p><strong>Address</strong></p>
-        <p>142 Oak Street</p>
-        <p>Old Town, CA 90210</p>
-      </div>
-      <div>
-        <p><strong>Hours</strong></p>
-        <p>Mon – Fri: 7am – 6pm</p>
-        <p>Sat – Sun: 8am – 5pm</p>
+  <div class="section-inner">
+    <div class="contact">
+      <h2>Visit Us</h2>
+      <div class="contact-grid">
+        <div>
+          <p><strong>Address</strong></p>
+          <p>142 Oak Street</p>
+          <p>Old Town, CA 90210</p>
+        </div>
+        <div>
+          <p><strong>Hours</strong></p>
+          <p>Mon – Fri: 7am – 6pm</p>
+          <p>Sat – Sun: 8am – 5pm</p>
+        </div>
       </div>
     </div>
   </div>
