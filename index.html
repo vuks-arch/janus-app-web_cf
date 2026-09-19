@@ -352,17 +352,32 @@
     grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:16px;
   }
-  .gallery div{
+  .gallery figure{
+    position:relative;
+    margin:0;
     height:clamp(150px,22vw,180px);
     border-radius:16px;
+    overflow:hidden;
     background:linear-gradient(135deg,#e6d2bb,#c9a37e);
-    display:grid;
-    place-items:center;
-    color:#7a5c44;
-    font-size:14px;
+  }
+  .gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .4s ease;
+  }
+  .gallery figure:hover img{
+    transform:scale(1.06);
+  }
+  .gallery figcaption{
+    position:absolute;
+    inset:auto 0 0 0;
+    padding:10px 12px;
+    font-size:13px;
     font-weight:600;
-    text-align:center;
-    padding:8px;
+    color:#fdf8f1;
+    text-align:left;
+    background:linear-gradient(180deg,rgba(30,20,14,0) 0%,rgba(30,20,14,.78) 100%);
   }
 
   /* Contact / Visit Us */
@@ -545,6 +560,8 @@
     .hero .slide{animation:none}
     .hero .slide:nth-child(1){opacity:1}
     .btn,.plan,.contact-card{transition:none}
+    .gallery img{transition:none}
+    .gallery figure:hover img{transform:none}
   }
 </style>
 </head>
@@ -679,13 +696,32 @@
   <div class="section-inner">
     <h2>Gallery</h2>
     <div class="gallery">
-      <div>Roastery</div>
-      <div>Latte Art</div>
-      <div>The Counter</div>
-      <div>Morning Light</div>
-      <div>Beans</div>
-      <div>Cozy Corner</div>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" alt="Coffee beans roasting in the roastery" loading="lazy">
+        <figcaption>Roastery</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80" alt="Latte art being poured into a cup" loading="lazy">
+        <figcaption>Latte Art</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80" alt="The coffee shop counter" loading="lazy">
+        <figcaption>The Counter</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80" alt="Morning light streaming into the cafe" loading="lazy">
+        <figcaption>Morning Light</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80" alt="Fresh roasted coffee beans" loading="lazy">
+        <figcaption>Beans</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="A cozy corner seating area in the cafe" loading="lazy">
+        <figcaption>Cozy Corner</figcaption>
+      </figure>
     </div>
+  </</div>
   </div>
 </section>
 
@@ -751,5 +787,4 @@
 </script>
 
 </body>
-</html</body>
 </html>
