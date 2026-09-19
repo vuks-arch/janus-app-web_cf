@@ -69,6 +69,7 @@
     background:rgba(253,248,241,.08);
     cursor:pointer;
     flex:0 0 auto;
+    margin-left:auto;
   }
   .nav-toggle span{
     display:block;
@@ -836,7 +837,7 @@
     font-size:13px;
     cursor:pointer;
     padding:2px 0;
-text-decoration:underline;
+    text-decoration:underline;
     font-family:inherit;
   }
   .cart-item .ci-remove:hover{color:#6f4e37}
@@ -1038,7 +1039,7 @@ text-decoration:underline;
   /* Small screens */
   @media(max-width:720px){
     nav{
-      flex-direction:row;
+     flex-direction:row;
       flex-wrap:wrap;
       align-items:center;
       gap:12px;
@@ -1452,8 +1453,9 @@ text-decoration:underline;
     var toggle = document.getElementById('navToggle');
     var menu = document.getElementById('navMenu');
     if(toggle && menu){
-      toggle.addEventListener('click', function(){
-       var open = menu.classList.toggle('open');
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var open = menu.classList.toggle('open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
 
@@ -1748,79 +1750,39 @@ text-decoration:underline;
       coCvc.value = coCvc.value.replace(/\D/g, '').slice(0, 4);
     });
 
-    function setStatus(message, type){
-      checkoutStatus.textContent = message;
-      checkoutStatus.className = 'checkout-status' + (type ? ' ' + type : '');
-    }
-
-    function validateForm(){
-      var name = document.getElementById('coName').value.trim();
-      var email = document.getElementById('coEmail').value.trim();
-      var cardDigits = coCard.value.replace(/\D/g, '');
-      var expDigits = coExp.value.replace(/\D/g, '');
-      var cvcDigits = coCvc.value.replace(/\D/g, '');
-
-      if(!name) return 'Please enter your full name.';
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
-      if(cardDigits.length < 13) return 'Please enter a valid card number.';
-      if(expDigits.length !== 4) return 'Please enter a valid expiry date (MM / YY).';
-      var month = parseInt(expDigits.slice(0, 2), 10);
-      if(month < 1 || month > 12) return 'Expiry month must be between 01 and 12.';
-      if(cvcDigits.length < 3) return 'Please enter a valid CVC.';
-      return '';
-    }
-
-    /* Build the line items payload that a Stripe backend would use
-       to create a Checkout Session. One-time items use mode 'payment';
-       if the cart contains any recurring items we use 'subscription'. */
-    function buildStripePayload(){
-      var hasRecurring = cart.some(function(item){ return !!item.interval; });
-      return {
-        line_items: cart.map(function(item){
-          var priceData = {
-            currency: 'usd',
-            product_data: { name: item.name },
-            unit_amount: item.priceCents
-          };
-          if(item.interval){
-            priceData.recurring = { interval: item.interval };
-          }
-          return {
-            price_data: priceData,
-            quantity: item.qty
-          };
-        }),
-        mode: hasRecurring ? 'subscription' : 'payment',
-        success_url: window.location.origin + '/?checkout=success',
-        cancel_url: window.location.origin + '/?checkout=cancel'
-      };
-    }
-
+    /* Submit / pay */
     checkoutForm.addEventListener('submit', function(e){
       e.preventDefault();
 
-      var error = validateForm();
-      if(error){
-        setStatus(error, 'error');
+      var name = document.getElementById('coName').value.trim();
+      var email = document.getElementById('coEmail').value.trim();
+      var card = coCard.value.replace(/\s/g, '');
+      var exp = coExp.value.replace(/\s/g, '');
+      var cvc = coCvc.value.trim();
+
+      if(!name || !email || card.length < 12 || exp.length < 4 || cvc.length < 3){
+        checkoutStatus.textContent = 'Please fill in all fields with valid details.';
+        checkoutStatus.className = 'checkout-status error';
         return;
       }
 
       payBtn.disabled = true;
-      setStatus('Contacting Stripe…');
+      checkoutStatus.textContent = 'Processing your payment…';
+      checkoutStatus.className = 'checkout-status';
 
-      var payload = buildStripePayload();
-
-      /* If a backend endpoint is configured, hand off to Stripe Checkout. */
+      /* If a backend endpoint is configured, use real Stripe Checkout. */
       if(STRIPE_CHECKOUT_ENDPOINT){
         fetch(STRIPE_CHECKOUT_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({
+            items: cart.map(function(item){
+              return { id: item.id, name: item.name, priceCents: item.priceCents, qty: item.qty, interval: item.interval };
+            }),
+            customer: { name: name, email: email }
+          })
         })
-        .then(function(res){
-          if(!res.ok) throw new Error('Checkout session request failed');
-          return res.json();
-        })
+        .then(function(res){ return res.json(); })
         .then(function(data){
           if(data && data.url){
             window.location.href = data.url;
@@ -1830,30 +1792,28 @@ text-decoration:underline;
         })
         .catch(function(){
           payBtn.disabled = false;
-          setStatus('Could not reach the payment server. Please try again.', 'error');
+          checkoutStatus.textContent = 'Something went wrong starting checkout. Please try again.';
+          checkoutStatus.className = 'checkout-status error';
         });
         return;
       }
 
-      /* Demo fallback: simulate a successful Stripe confirmation. */
+      /* Demo fallback: simulate a successful payment. */
       setTimeout(function(){
         payBtn.disabled = false;
-        setStatus('Payment confirmed — welcome to Ember & Oak!', 'success');
+        checkoutStatus.textContent = 'Payment successful! Thank you, ' + name + '. A receipt has been sent to ' + email + '.';
+        checkoutStatus.className = 'checkout-status success';
         cart = [];
         renderCart();
         setTimeout(function(){
           closeCheckout();
           closeCart();
-        }, 1400);
-      }, 900);
+        }, 1800);
+      }, 1200);
     });
-
-    /* Expose the key so a real integration can read it if needed. */
-    window.__STRIPE_PUBLISHABLE_KEY__ = STRIPE_PUBLISHABLE_KEY;
 
     renderCart();
   })();
 </script>
-
 </body>
 </html>
