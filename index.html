@@ -332,22 +332,144 @@
     padding:8px;
   }
 
-  /* Contact */
+  /* Contact / Visit Us */
   .contact{
-    background:#3b2a20;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#3b2a20 0%,#5a3f2e 55%,#6f4e37 100%);
     color:#fdf8f1;
-    border-radius:24px;
-    padding:clamp(28px,5vw,48px) clamp(20px,4vw,40px);
+    border-radius:28px;
+    padding:clamp(32px,5.5vw,56px) clamp(22px,4.5vw,48px);
     width:100%;
+    box-shadow:0 24px 50px rgba(59,42,32,.22);
   }
-  .contact h2{color:#f3e3d3}
+  .contact::before{
+    content:"";
+    position:absolute;
+    top:-120px;
+    right:-120px;
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(217,180,143,.35),transparent 70%);
+    pointer-events:none;
+  }
+  .contact::after{
+    content:"";
+    position:absolute;
+    bottom:-140px;
+    left:-100px;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(253,248,241,.14),transparent 70%);
+    pointer-events:none;
+  }
+  .contact-head{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    margin:0 0 36px;
+  }
+  .contact .eyebrow{
+    display:inline-block;
+    font-size:clamp(11px,1.4vw,12px);
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(253,248,241,.12);
+    border:1px solid rgba(253,248,241,.26);
+    color:#f3e3d3;
+    margin-bottom:18px;
+  }
+  .contact h2{
+    color:#fdf8f1;
+    font-size:clamp(26px,4.4vw,34px);
+    margin:0 0 12px;
+    letter-spacing:-.6px;
+  }
+  .contact-head p{
+    color:#e0cdb9;
+    margin:0;
+    font-size:clamp(15px,2vw,17px);
+  }
   .contact-grid{
+    position:relative;
+    z-index:1;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:32px;
+    gap:20px;
   }
-  .contact p{color:#e0cdb9;margin:6px 0}
-  .contact strong{color:#fdf8f1}
+  .contact-card{
+    background:rgba(253,248,241,.07);
+    border:1px solid rgba(253,248,241,.16);
+    border-radius:20px;
+    padding:clamp(20px,3vw,26px);
+    transition:transform .18s, background .2s, border-color .2s;
+  }
+  .contact-card:hover{
+    transform:translateY(-4px);
+    background:rgba(253,248,241,.12);
+    border-color:rgba(217,180,143,.5);
+  }
+  .contact-card .icon{
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    background:rgba(217,180,143,.22);
+    border:1px solid rgba(217,180,143,.4);
+    font-size:20px;
+    margin-bottom:16px;
+  }
+  .contact-card h3{
+    margin:0 0 10px;
+    font-size:15px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:#d9b48f;
+    font-weight:700;
+  }
+  .contact-card p{
+    color:#e0cdb9;
+    margin:4px 0;
+    font-size:15px;
+  }
+  .contact-card strong{color:#fdf8f1}
+  .contact-card a{
+    color:#f3e3d3;
+    border-bottom:1px solid rgba(243,227,211,.4);
+    transition:color .2s, border-color .2s;
+  }
+  .contact-card a:hover{
+    color:#fff;
+    border-color:#fff;
+  }
+  .contact-actions{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:32px;
+  }
+  .contact-actions .btn{
+    background:#fdf8f1;
+    color:#6f4e37;
+  }
+  .contact-actions .btn:hover{background:#f3e3d3}
+  .contact-actions .btn.ghost{
+    background:transparent;
+    color:#fdf8f1;
+    border:1px solid rgba(253,248,241,.45);
+  }
+  .contact-actions .btn.ghost:hover{
+    background:rgba(253,248,241,.12);
+    border-color:#fdf8f1;
+  }
 
   footer{
     text-align:center;
@@ -373,6 +495,7 @@
     .menu-list .price{align-self:flex-start}
     .btn{width:100%;padding:14px 20px}
     .plan .btn{width:100%}
+    .contact-actions{flex-direction:column}
   }
 
   /* Large screens */
@@ -386,7 +509,7 @@
     html{scroll-behavior:auto}
     .hero .slide{animation:none}
     .hero .slide:nth-child(1){opacity:1}
-    .btn,.plan{transition:none}
+    .btn,.plan,.contact-card{transition:none}
   }
 </style>
 </head>
@@ -529,18 +652,34 @@
 <section id="contact">
   <div class="section-inner">
     <div class="contact">
-      <h2>Visit Us</h2>
+      <div class="contact-head">
+        <span class="eyebrow">Come Say Hello</span>
+        <h2>Visit Us</h2>
+        <p>Tucked into the corner of Oak Street, our doors are open early and the kettle is always on. Drop by for a cup, grab a bag of beans, or just soak up the morning light.</p>
+      </div>
       <div class="contact-grid">
-        <div>
-          <p><strong>Address</strong></p>
-          <p>142 Oak Street</p>
+        <div class="contact-card">
+          <div class="icon">📍</div>
+          <h3>Find Us</h3>
+          <p><strong>142 Oak Street</strong></p>
           <p>Old Town, CA 90210</p>
         </div>
-        <div>
-          <p><strong>Hours</strong></p>
-          <p>Mon – Fri: 7am – 6pm</p>
-          <p>Sat – Sun: 8am – 5pm</p>
+        <div class="contact-card">
+          <div class="icon">🕒</div>
+          <h3>Opening Hours</h3>
+          <p><strong>Mon – Fri</strong> · 7am – 6pm</p>
+          <p><strong>Sat – Sun</strong> · 8am – 5pm</p>
         </div>
+        <div class="contact-card">
+          <div class="icon">✉️</div>
+          <h3>Get in Touch</h3>
+          <p><a href="mailto:hello@emberandoak.coffee">hello@emberandoak.coffee</a></p>
+          <p><a href="tel:+15550142298">(555) 014-2298</a></p>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <a class="btn" href="#menu">Browse the Menu</a>
+        <a class="btn ghost" href="#subscriptions">Join a Subscription</a>
       </div>
     </div>
   </div>
