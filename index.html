@@ -775,7 +775,7 @@
         </li>
         <li>
           <span class="name">Cappuccino
-           class="desc">Classic balance of espresso and foam</span>
+            <span class="desc">Classic balance of espresso and foam</span>
           </span>
           <span class="price">$4.00</span>
         </li>
@@ -851,33 +851,6 @@
 <section id="gallery">
   <div class="section-inner">
     <h2>Gallery</h2>
-    <div class="gallery">
-      <figure data-caption="Roastery">
-        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" alt="Coffee beans roasting in the roastery" loading="lazy">
-        <figcaption>Roastery</figcaption>
-      </figure>
-      <figure data-caption="Latte Art">
-        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80" alt="Latte art being poured into a cup" loading="lazy">
-        <figcaption>Latte Art</figcaption>
-      </figure>
-      <figure data-caption="The Counter">
-        <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80" alt="The coffee shop counter" loading="lazy">
-        <figcaption>The Counter</figcaption>
-      </figure>
-      <figure data-caption="Morning Light">
-        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80" alt="Morning light streaming into the cafe" loading="lazy">
-        <figcaption>Morning Light</figcaption>
-      </figure>
-      <figure data-caption="Beans">
-        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80" alt="Fresh roasted coffee beans" loading="lazy">
-        <figcaption>Beans</figcaption>
-      </figure>
-      <figure data-caption="Cozy Corner">
-        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="A cozy corner seating area in the cafe" loading="lazy">
-        <figcaption>Cozy Corner</figcaption>
-      </figure>
-    </div>
-
     <div class="ribbon-wrap">
       <div class="ribbon" id="ribbon">
         <figure data-caption="Roastery">
@@ -1012,7 +985,7 @@
     var nextBtn = document.getElementById('lightboxNext');
 
     var figures = Array.prototype.slice.call(
-      document.querySelectorAll('.gallery figure, .ribbon figure')
+      document.querySelectorAll('.ribbon figure')
     );
     var currentIndex = 0;
 
