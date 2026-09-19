@@ -836,7 +836,7 @@
     font-size:13px;
     cursor:pointer;
     padding:2px 0;
-    text-decoration:underline;
+text-decoration:underline;
     font-family:inherit;
   }
   .cart-item .ci-remove:hover{color:#6f4e37}
@@ -1453,11 +1453,11 @@
     var menu = document.getElementById('navMenu');
     if(toggle && menu){
       toggle.addEventListener('click', function(){
-        var open = menu.classList.toggle('open');
+       var open = menu.classList.toggle('open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
 
-      menu.addEventListener('click, function(e){
+      menu.addEventListener('click', function(e){
         if(e.target.tagName === 'A'){
           menu.classList.remove('open');
           toggle.setAttribute('aria-expanded','false');
