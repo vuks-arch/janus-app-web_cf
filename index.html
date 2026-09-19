@@ -88,6 +88,41 @@
     transform:translateY(-7px) rotate(-45deg);
   }
 
+  /* Cart button */
+  .cart-btn{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 16px;
+    border-radius:999px;
+    border:1px solid rgba(253,248,241,.28);
+    background:rgba(253,248,241,.08);
+    color:#fdf8f1;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .2s, transform .15s;
+    flex:0 0 auto;
+  }
+  .cart-btn:hover{
+    background:rgba(253,248,241,.18);
+    transform:translateY(-1px);
+  }
+  .cart-btn .cart-count{
+    display:inline-grid;
+    place-items:center;
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+    border-radius:999px;
+    background:#d9b48f;
+    color:#3b2a20;
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
+  }
+
   /* Hero / Banner slider */
   .hero{
     position:relative;
@@ -181,6 +216,9 @@
     font-size:clamp(15px,1.8vw,16px);
     transition:transform .15s, background .2s;
     text-align:center;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
   }
   .btn:hover{
     transform:translateY(-2px);
@@ -664,6 +702,307 @@
     color:#8a6f5c;
   }
 
+  /* Cart drawer */
+  .cart-overlay{
+    position:fixed;
+    inset:0;
+    z-index:90;
+    background:rgba(20,13,9,.55);
+    backdrop-filter:blur(3px);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .25s ease, visibility .25s ease;
+  }
+  .cart-overlay.open{
+    opacity:1;
+    visibility:visible;
+  }
+  .cart-drawer{
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    z-index:95;
+    width:min(420px,100%);
+    display:flex;
+    flex-direction:column;
+    background:#fdf8f1;
+    box-shadow:-20px 0 50px rgba(59,42,32,.25);
+    transform:translateX(100%);
+    transition:transform .3s ease;
+  }
+  .cart-drawer.open{
+    transform:translateX(0);
+  }
+  .cart-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:20px 22px;
+    border-bottom:1px solid #e6d2bb;
+    background:#3b2a20;
+    color:#fdf8f1;
+  }
+  .cart-header h3{
+    margin:0;
+    font-size:18px;
+    letter-spacing:.3px;
+  }
+  .cart-close{
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px solid rgba(253,248,241,.3);
+    background:rgba(253,248,241,.1);
+    color:#fdf8f1;
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .cart-close:hover{background:rgba(253,248,241,.22)}
+  .cart-items{
+    flex:1;
+    overflow-y:auto;
+    padding:16px 22px;
+    list-style:none;
+    margin:0;
+  }
+  .cart-item{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px dashed #d9c3ab;
+  }
+  .cart-item:last-child{border-bottom:none}
+  .cart-item .ci-info{flex:1;min-width:0}
+  .cart-item .ci-name{
+    font-weight:600;
+    color:#3b2a20;
+    font-size:15px;
+  }
+  .cart-item .ci-meta{
+    font-size:13px;
+    color:#8a6f5c;
+    margin-top:2px;
+  }
+  .cart-item .ci-price{
+    font-weight:700;
+    color:#6f4e37;
+    white-space:nowrap;
+    font-size:15px;
+  }
+  .cart-item .ci-remove{
+    border:none;
+    background:none;
+    color:#a9744f;
+    font-size:13px;
+    cursor:pointer;
+    padding:2px 0;
+    text-decoration:underline;
+    font-family:inherit;
+  }
+  .cart-item .ci-remove:hover{color:#6f4e37}
+  .cart-empty{
+    padding:40px 22px;
+    text-align:center;
+    color:#8a6f5c;
+    font-size:15px;
+  }
+  .cart-footer{
+    padding:18px 22px 22px;
+    border-top:1px solid #e6d2bb;
+    background:#f6ecdf;
+  }
+  .cart-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:14px;
+    font-size:15px;
+    color:#5c4636;
+  }
+  .cart-total strong{
+    font-size:22px;
+    color:#3b2a20;
+    letter-spacing:-.5px;
+  }
+  .cart-footer .btn{
+    width:100%;
+    background:#6f4e37;
+    color:#fdf8f1;
+  }
+  .cart-footer .btn:hover{background:#8b5e3c}
+  .cart-footer .btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+    transform:none;
+  }
+  .cart-note{
+    margin:10px 0 0;
+    font-size:12px;
+    color:#8a6f5c;
+    text-align:center;
+  }
+
+  /* Checkout modal */
+  .checkout-modal{
+    position:fixed;
+    inset:0;
+    z-index:110;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(16px,4vw,40px);
+    background:rgba(20,13,9,.88);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    transition:opacity .25s ease;
+  }
+  .checkout-modal.open{
+    display:flex;
+    opacity:1;
+  }
+  .checkout-card{
+    position:relative;
+    width:min(480px,100%);
+    max-height:100%;
+    overflow-y:auto;
+    background:#fdf8f1;
+    border-radius:24px;
+    padding:clamp(24px,4vw,36px);
+    box-shadow:0 30px 70px rgba(0,0,0,.5);
+  }
+  .checkout-card h3{
+    margin:0 0 6px;
+    font-size:clamp(20px,3vw,24px);
+    color:#6f4e37;
+    letter-spacing:-.4px;
+  }
+  .checkout-card .checkout-sub{
+    margin:0 0 22px;
+    font-size:14px;
+    color:#8a6f5c;
+  }
+  .checkout-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px solid #e6d2bb;
+    background:#f6ecdf;
+    color:#6f4e37;
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+    transition:background .2s;
+  }
+  .checkout-close:hover{background:#e6d2bb}
+  .checkout-summary{
+    list-style:none;
+    margin:0 0 18px;
+    padding:0;
+    border-top:1px solid #e6d2bb;
+  }
+  .checkout-summary li{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px dashed #d9c3ab;
+    font-size:14px;
+    color:#5c4636;
+  }
+  .checkout-summary li span:last-child{
+    font-weight:700;
+    color:#6f4e37;
+    white-space:nowrap;
+  }
+  .checkout-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin:0 0 22px;
+    font-size:15px;
+    color:#5c4636;
+  }
+  .checkout-total strong{
+    font-size:22px;
+    color:#3b2a20;
+    letter-spacing:-.5px;
+  }
+  .field{
+    margin-bottom:16px;
+  }
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:#5c4636;
+    margin-bottom:6px;
+    letter-spacing:.3px;
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid #e6d2bb;
+    background:#fff;
+    color:#3b2a20;
+    font-size:15px;
+    font-family:inherit;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .field input:focus{
+    outline:none;
+    border-color:#a9744f;
+    box-shadow:0 0 0 3px rgba(169,116,79,.18);
+  }
+  .field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .checkout-card .btn{
+    width:100%;
+    background:#6f4e37;
+    color:#fdf8f1;
+    margin-top:6px;
+  }
+  .checkout-card .btn:hover{background:#8b5e3c}
+  .checkout-card .btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+  }
+  .checkout-status{
+    margin:14px 0 0;
+    font-size:13px;
+    text-align:center;
+    min-height:18px;
+  }
+  .checkout-status.error{color:#b3402f}
+  .checkout-status.success{color:#3f7d4e}
+  .checkout-demo-note{
+    margin:14px 0 0;
+    padding:10px 12px;
+    border-radius:12px;
+    background:#f6ecdf;
+    border:1px dashed #d9c3ab;
+    font-size:12px;
+    color:#8a6f5c;
+    text-align:center;
+  }
+
   /* Small screens */
   @media(max-width:720px){
     nav{
@@ -695,6 +1034,8 @@
     nav ul li:last-child a{border-bottom:none}
     .menu-list li{flex-direction:row}
     .contact-head p{white-space:normal}
+    .cart-btn{padding:10px 12px}
+    .cart-btn .cart-label{display:none}
   }
 
   /* Very small screens */
@@ -707,6 +1048,7 @@
     .menu-list .price{align-self:flex-start}
     .btn{width:100%;padding:14px 20px}
     .plan .btn{width:100%}
+    .field-row{grid-template-columns:1fr}
   }
 
   /* Reduced motion */
@@ -720,6 +1062,9 @@
     .ribbon img{transition:none}
     .ribbon figure:hover img{transform:none}
     .lightbox{transition:none}
+    .cart-drawer{transition:none}
+    .cart-overlay{transition:none}
+    .checkout-modal{transition:none}
   }
 </style>
 </head>
@@ -739,6 +1084,11 @@
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+    <span aria-hidden="true">🛒</span>
+    <span class="cart-label">Cart</span>
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
 </nav>
 
 <header class="hero">
@@ -777,7 +1127,7 @@
         </li>
         <li>
           <span class="name">Cappuccino
-            <span class="desc">Classic balance ofespresso and foam</span>
+            <span class="desc">Classic balance of espresso and foam</span>
           </span>
           <span class="price">$4.00</span>
         </li>
@@ -819,7 +1169,11 @@
           <li>Free local delivery</li>
           <li>Pause or skip any month</li>
         </ul>
-        <a class="btn" href="#contact">Subscribe</a>
+        <button class="btn" type="button"
+          data-plan-id="roasters-club"
+          data-plan-name="Roaster's Club"
+          data-plan-price="18"
+          data-plan-interval="month">Subscribe</button>
       </div>
       <div class="plan featured">
         <span class="tag">Most Popular</span>
@@ -831,7 +1185,11 @@
           <li>Priority morning pickup line</li>
           <li>Members-only tasting invites</li>
         </ul>
-        <a class="btn" href="#contact">Subscribe</a>
+        <button class="btn" type="button"
+          data-plan-id="daily-pour-pass"
+          data-plan-name="Daily Pour Pass"
+          data-plan-price="45"
+          data-plan-interval="month">Subscribe</button>
       </div>
       <div class="plan">
         <span class="tag">Beans + Drinks</span>
@@ -843,10 +1201,14 @@
           <li>15% off all other drinks</li>
           <li>Free brew gear loan &amp; classes</li>
         </ul>
-        <a class="btn" href="#contact">Subscribe</a>
+        <button class="btn" type="button"
+          data-plan-id="ember-oak-reserve"
+          data-plan-name="Ember &amp; Oak Reserve"
+          data-plan-price="65"
+          data-plan-interval="month">Subscribe</button>
       </div>
     </div>
-    <p class="subs-note">All plans renew monthly and can be paused, upgraded, or cancelled anytime from your account.</p>
+    <p class="subs-note">All plans renew monthly and can be paused, upgraded, or cancelled anytime from your account. Secure checkout powered by Stripe.</p>
   </div>
 </section>
 
@@ -953,6 +1315,67 @@
   <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">›</button>
 </div>
 
+<!-- Cart overlay + drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">×</button>
+  </div>
+  <ul class="cart-items" id="cartItems"></ul>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">$0.00</strong>
+    </div>
+    <button class="btn" id="checkoutBtn" type="button" disabled>Checkout with Stripe</button>
+    <p class="cart-note">Secure payment processed by Stripe.</p>
+  </div>
+</aside>
+
+<!-- Checkout modal -->
+<div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="checkout-card">
+    <button class="checkout-close" id="checkoutClose" aria-label="Close checkout">×</button>
+    <h3>Complete Your Order</h3>
+    <p class="checkout-sub">Enter your details to start a secure Stripe checkout.</p>
+
+    <ul class="checkout-summary" id="checkoutSummary"></ul>
+    <div class="checkout-total">
+      <span>Total due today</span>
+      <strong id="checkoutTotal">$0.00</strong>
+    </div>
+
+    <form id="checkoutForm" novalidate>
+      <div class="field">
+        <label for="coName">Full name</label>
+        <input id="coName" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required>
+      </div>
+      <div class="field">
+        <label for="coEmail">Email</label>
+        <input id="coEmail" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required>
+      </div>
+      <div class="field">
+        <label for="coCard">Card number</label>
+        <input id="coCard" name="card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" maxlength="19" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="coExp">Expiry</label>
+          <input id="coExp" name="exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" maxlength="7" required>
+        </div>
+        <div class="field">
+          <label for="coCvc">CVC</label>
+          <input id="coCvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" required>
+        </div>
+      </div>
+      <button class="btn" id="payBtn" type="submit">Pay <span id="payAmount">$0.00</span></button>
+      <p class="checkout-status" id="checkoutStatus" role="status" aria-live="polite"></p>
+      <p class="checkout-demo-note">Demo mode: no real charge is made. In production, card details are tokenized by Stripe Elements and never touch your server.</p>
+    </form>
+  </div>
+</div>
+
 <script>
   (function(){
     var toggle = document.getElementById('navToggle');
@@ -1038,9 +1461,299 @@
     document.addEventListener('keydown', function(e){
       if(!lightbox.classList.contains('open')) return;
       if(e.key === 'Escape') closeLightbox();
-      else if(e.key === 'ArrowLeft') showPrev();
+      else if(e.key === 'ArrowLeft showPrev();
       else if(e.key === 'ArrowRight') showNext();
     });
+
+    /* ============================================================
+       Cart + Stripe checkout integration
+       ============================================================ */
+
+    /* Stripe publishable key placeholder.
+       Replace with your own key from https://dashboard.stripe.com/apikeys
+       e.g. 'pk_test_51Abc...' */
+    var STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY';
+
+    /* Optional: point this at your backend endpoint that creates a
+       Stripe Checkout Session. When set, the client will POST the cart
+       there and redirect to the returned session URL. When left empty,
+       the demo falls back to a simulated confirmation. */
+    var STRIPE_CHECKOUT_ENDPOINT = ''; // e.g. '/api/create-checkout-session'
+
+    var cart = [];
+    var cartBtn = document.getElementById('cartBtn');
+    var cartCount = document.getElementById('cartCount');
+    var cartDrawer = document.getElementById('cartDrawer');
+    var cartOverlay = document.getElementById('cartOverlay');
+    var cartClose = document.getElementById('cartClose');
+    var cartItemsEl = document.getElementById('cartItems');
+    var cartTotalEl = document.getElementById('cartTotal');
+    var checkoutBtn = document.getElementById('checkoutBtn');
+
+    var checkoutModal = document.getElementById('checkoutModal');
+    var checkoutClose = document.getElementById('checkoutClose');
+    var checkoutSummary = document.getElementById('checkoutSummary');
+    var checkoutTotal = document.getElementById('checkoutTotal');
+    var payAmount = document.getElementById('payAmount');
+    var checkoutForm = document.getElementById('checkoutForm');
+    var checkoutStatus = document.getElementById('checkoutStatus');
+    var payBtn = document.getElementById('payBtn');
+
+    var coCard = document.getElementById('coCard');
+    var coExp = document.getElementById('coExp');
+    var coCvc = document.getElementById('coCvc');
+
+    function formatMoney(cents){
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function cartTotalCents(){
+      return cart.reduce(function(sum, item){
+        return sum + item.priceCents * item.qty;
+      }, 0);
+    }
+
+    function renderCart(){
+      var count = cart.reduce(function(sum, item){ return sum + item.qty; }, 0);
+      cartCount.textContent = count;
+
+      if(cart.length === 0){
+        cartItemsEl.innerHTML = '<li class="cart-empty">Your cart is empty.<br>Add a subscription plan to get started.</li>';
+      } else {
+        cartItemsEl.innerHTML = cart.map(function(item, i){
+          return '' +
+            '<li class="cart-item">' +
+              '<div class="ci-info">' +
+                '<div class="ci-name">' + item.name + '</div>' +
+                '<div class="ci-meta">' + formatMoney(item.priceCents) + ' / ' + item.interval + ' · qty ' + item.qty + '</div>' +
+                '<button class="ci-remove" type="button" data-remove="' + i + '">Remove</button>' +
+              '</div>' +
+              '<div class="ci-price">' + formatMoney(item.priceCents * item.qty) + '</div>' +
+            '</li>';
+        }).join('');
+      }
+
+      cartTotalEl.textContent = formatMoney(cartTotalCents());
+      checkoutBtn.disabled = cart.length === 0;
+    }
+
+    function addToCart(plan){
+      var existing = null;
+      for(var i = 0; i < cart.length; i++){
+        if(cart[i].id === plan.id){ existing = cart[i]; break; }
+      }
+      if(existing){
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: plan.id,
+          name: plan.name,
+          priceCents: plan.priceCents,
+          interval: plan.interval,
+          qty: 1
+        });
+      }
+      renderCart();
+      openCart();
+    }
+
+    function removeFromCart(index){
+      if(index < 0 || index >= cart.length) return;
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    function openCart(){
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart(){
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('open');
+      if(!checkoutModal.classList.contains('open')){
+        document.body.style.overflow = '';
+      }
+    }
+
+    /* Plan subscribe buttons */
+    var planButtons = document.querySelectorAll('[data-plan-id]');
+    planButtons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var price = parseFloat(btn.getAttribute('data-plan-price')) || 0;
+        addToCart({
+          id: btn.getAttribute('data-plan-id'),
+          name: btn.getAttribute('data-plan-name'),
+          priceCents: Math.round(price * 100),
+          interval: btn.getAttribute('data-plan-interval') || 'month'
+        });
+      });
+    });
+
+    cartBtn.addEventListener('click', openCart);
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    cartItemsEl.addEventListener('click', function(e){
+      var target = e.target;
+      if(target && target.getAttribute && target.getAttribute('data-remove') !== null){
+        removeFromCart(parseInt(target.getAttribute('data-remove'), 10));
+      }
+    });
+
+    /* Checkout modal */
+    function openCheckout(){
+      if(cart.length === 0) return;
+      checkoutSummary.innerHTML = cart.map(function(item){
+        return '<li><span>' + item.name + ' × ' + item.qty + '</span><span>' + formatMoney(item.priceCents * item.qty) + '</span></li>';
+      }).join('');
+      var total = formatMoney(cartTotalCents());
+      checkoutTotal.textContent = total;
+      payAmount.textContent = total;
+      checkoutStatus.textContent = '';
+      checkoutStatus.className = 'checkout-status';
+      checkoutModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckout(){
+      checkoutModal.classList.remove('open');
+      if(!cartDrawer.classList.contains('open')){
+        document.body.style.overflow = '';
+      }
+    }
+
+    checkoutBtn.addEventListener('click', openCheckout);
+    checkoutClose.addEventListener('click', closeCheckout);
+
+    checkoutModal.addEventListener('click', function(e){
+      if(e.target === checkoutModal) closeCheckout();
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        if(checkoutModal.classList.contains('open')) closeCheckout();
+        else if(cartDrawer.classList.contains('open')) closeCart();
+      }
+    });
+
+    /* Light input formatting for card fields */
+    coCard.addEventListener('input', function(){
+      var digits = coCard.value.replace(/\D/g, '').slice(0, 16);
+      coCard.value = digits.replace(/(.{4})/g, '$1 ').trim();
+    });
+    coExp.addEventListener('input', function(){
+      var digits = coExp.value.replace(/\D/g, '').slice(0, 4);
+      if(digits.length >= 3){
+        coExp.value = digits.slice(0, 2) + ' / ' + digits.slice(2);
+      } else {
+        coExp.value = digits;
+      }
+    });
+    coCvc.addEventListener('input', function(){
+      coCvc.value = coCvc.value.replace(/\D/g, '').slice(0, 4);
+    });
+
+    function setStatus(message, type){
+      checkoutStatus.textContent = message;
+      checkoutStatus.className = 'checkout-status' + (type ? ' ' + type : '');
+    }
+
+    function validateForm(){
+      var name = document.getElementById('coName').value.trim();
+      var email = document.getElementById('coEmail').value.trim();
+      var cardDigits = coCard.value.replace(/\D/g, '');
+      var expDigits = coExp.value.replace(/\D/g, '');
+      var cvcDigits = coCvc.value.replace(/\D/g, '');
+
+      if(!name) return 'Please enter your full name.';
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+      if(cardDigits.length < 13) return 'Please enter a valid card number.';
+      if(expDigits.length !== 4) return 'Please enter a valid expiry date (MM / YY).';
+      var month = parseInt(expDigits.slice(0, 2), 10);
+      if(month < 1 || month > 12) return 'Expiry month must be between 01 and 12.';
+      if(cvcDigits.length < 3) return 'Please enter a valid CVC.';
+      return '';
+    }
+
+    /* Build the line items payload that a Stripe backend would use
+       to create a Checkout Session or a Subscription. */
+    function buildStripePayload(){
+      return {
+        line_items: cart.map(function(item){
+          return {
+            price_data: {
+              currency: 'usd',
+              product_data: { name: item.name },
+              unit_amount: item.priceCents,
+              recurring: { interval: item.interval }
+            },
+            quantity: item.qty
+          };
+        }),
+        mode: 'subscription',
+        success_url: window.location.origin + '/?checkout=success',
+        cancel_url: window.location.origin + '/?checkout=cancel'
+      };
+    }
+
+    checkoutForm.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var error = validateForm();
+      if(error){
+        setStatus(error, 'error');
+        return;
+      }
+
+      payBtn.disabled = true;
+      setStatus('Contacting Stripe…');
+
+      var payload = buildStripePayload();
+
+      /* If a backend endpoint is configured, hand off to Stripe Checkout. */
+      if(STRIPE_CHECKOUT_ENDPOINT){
+        fetch(STRIPE_CHECKOUT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function(res){
+          if(!res.ok) throw new Error('Checkout session request failed');
+          return res.json();
+        })
+        .then(function(data){
+          if(data && data.url){
+            window.location.href = data.url;
+          } else {
+            throw new Error('No checkout URL returned');
+          }
+        })
+        .catch(function(){
+          payBtn.disabled = false;
+          setStatus('Could not reach the payment server. Please try again.', 'error');
+        });
+        return;
+      }
+
+      /* Demo fallback: simulate a successful Stripe confirmation. */
+      setTimeout(function(){
+        payBtn.disabled = false;
+        setStatus('Payment confirmed — welcome to Ember & Oak!', 'success');
+        cart = [];
+        renderCart();
+        setTimeout(function(){
+          closeCheckout();
+          closeCart();
+        }, 1400);
+      }, 900);
+    });
+
+    /* Expose the key so a real integration can read it if needed. */
+    window.__STRIPE_PUBLISHABLE_KEY__ = STRIPE_PUBLISHABLE_KEY;
+
+    renderCart();
   })();
 </script>
 
