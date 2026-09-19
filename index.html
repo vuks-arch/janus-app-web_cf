@@ -141,6 +141,109 @@
     white-space:nowrap;
   }
 
+  /* Subscriptions */
+  .subs-intro{
+    max-width:640px;
+    margin:0 0 32px;
+  }
+  .plans{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .plan{
+    display:flex;
+    flex-direction:column;
+    background:#f6ecdf;
+    border:1px solid #e6d2bb;
+    border-radius:24px;
+    padding:32px 28px;
+    transition:transform .15s, box-shadow .2s;
+  }
+  .plan:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 30px rgba(59,42,32,.12);
+  }
+  .plan.featured{
+    background:#3b2a20;
+    border-color:#3b2a20;
+    color:#fdf8f1;
+  }
+  .plan .tag{
+    align-self:flex-start;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    padding:4px 12px;
+    border-radius:999px;
+    background:#d9b48f;
+    color:#3b2a20;
+    margin-bottom:16px;
+  }
+  .plan h3{
+    margin:0 0 6px;
+    font-size:22px;
+    color:#6f4e37;
+    letter-spacing:-.3px;
+  }
+  .plan.featured h3{color:#f3e3d3}
+  .plan .price-line{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin:0 0 18px;
+  }
+  .plan .amount{
+    font-size:34px;
+    font-weight:700;
+    color:#3b2a20;
+    letter-spacing:-1px;
+  }
+  .plan.featured .amount{color:#fdf8f1}
+  .plan .per{
+    font-size:14px;
+    color:#8a6f5c;
+  }
+  .plan.featured .per{color:#d9c3ab}
+  .plan ul{
+    list-style:none;
+    margin:0 0 28px;
+    padding:0;
+    font-size:15px;
+    flex:1;
+  }
+  .plan ul li{
+    padding:8px 0 8px 24px;
+    position:relative;
+    color:#5c4636;
+  }
+  .plan.featured ul li{color:#e0cdb9}
+  .plan ul li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    color:#a9744f;
+    font-weight:700;
+  }
+  .plan.featured ul li::before{color:#d9b48f}
+  .plan .btn{
+    text-align:center;
+    background:#6f4e37;
+    color:#fdf8f1;
+  }
+  .plan .btn:hover{background:#8b5e3c}
+  .plan.featured .btn{
+    background:#fdf8f1;
+    color:#6f4e37;
+  }
+  .plan.featured .btn:hover{background:#f3e3d3}
+  .subs-note{
+    margin-top:24px;
+    font-size:14px;
+    color:#8a6f5c;
+  }
+
   /* Gallery */
   .gallery{
     display:grid;
@@ -186,6 +289,7 @@
     nav ul{gap:16px;flex-wrap:wrap;justify-content:center}
     .hero h1{font-size:38px}
     .about,.contact-grid{grid-template-columns:1fr}
+    .plans{grid-template-columns:1fr}
     .gallery{grid-template-columns:1fr 1fr}
     .menu{padding:32px 24px}
   }
@@ -198,6 +302,7 @@
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
+    <li><a href="#subscriptions">Subscriptions</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -262,6 +367,50 @@
       </li>
     </ul>
   </div>
+</section>
+
+<section id="subscriptions">
+  <h2>Subscription Plans</h2>
+  <p class="subs-intro">Never run out of great coffee. Choose a plan and we'll take care of the rest — fresh beans delivered on your schedule, or a monthly pass for unlimited drinks at the counter. Pause or cancel anytime.</p>
+  <div class="plans">
+    <div class="plan">
+      <span class="tag">Beans</span>
+      <h3>Roaster's Club</h3>
+      <p class="price-line"><span class="amount">$18</span><span class="per">/ month</span></p>
+      <ul>
+        <li>One 12oz bag of fresh-roasted beans</li>
+        <li>Rotating single-origin selection</li>
+        <li>Free local delivery</li>
+        <li>Pause or skip any month</li>
+      </ul>
+      <a class="btn" href="#contact">Subscribe</a>
+    </div>
+    <div class="plan featured">
+      <span class="tag">Most Popular</span>
+      <h3>Daily Pour Pass</h3>
+      <p class="price-line"><span class="amount">$45</span><span class="per">/ month</span></p>
+      <ul>
+        <li>One free drip or pour over every day</li>
+        <li>10% off all other drinks</li>
+        <li>Priority morning pickup line</li>
+        <li>Members-only tasting invites</li>
+      </ul>
+      <a class="btn" href="#contact">Subscribe</a>
+    </div>
+    <div class="plan">
+      <span class="tag">Beans + Drinks</span>
+      <h3>Ember &amp; Oak Reserve</h3>
+      <p class="price-line"><span class="amount">$65</span><span class="per">/ month</span></p>
+      <ul>
+        <li>Two 12oz bags of beans monthly</li>
+        <li>Unlimited drip coffee in-store</li>
+        <li>15% off all other drinks</li>
+        <li>Free brew gear loan &amp; classes</li>
+      </ul>
+      <a class="btn" href="#contact">Subscribe</a>
+    </div>
+  </div>
+  <p class="subs-note">All plans renew monthly and can be paused, upgraded, or cancelled anytime from your account.</p>
 </section>
 
 <section id="gallery">
