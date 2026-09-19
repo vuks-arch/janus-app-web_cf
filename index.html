@@ -55,6 +55,39 @@
   }
   nav ul a:hover{opacity:1;text-decoration:underline}
 
+  /* Hamburger toggle (hidden on desktop) */
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:44px;
+    height:44px;
+    padding:10px;
+    border:1px solid rgba(253,248,241,.28);
+    border-radius:12px;
+    background:rgba(253,248,241,.08);
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .nav-toggle span{
+    display:block;
+    height:2px;
+    width:100%;
+    border-radius:2px;
+    background:#fdf8f1;
+    transition:transform .25s, opacity .2s;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){
+    transform:translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){
+    opacity:0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg);
+  }
+
   /* Hero / Banner slider */
   .hero{
     position:relative;
@@ -458,8 +491,33 @@
 
   /* Small screens */
   @media(max-width:720px){
-    nav{flex-direction:column;gap:12px;padding:14px 16px}
-    nav ul{gap:14px;flex-wrap:wrap;justify-content:center}
+    nav{
+      flex-direction:row;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+    }
+    .nav-toggle{display:flex}
+    nav ul{
+      display:none;
+      flex-direction:column;
+      align-items:stretch;
+      gap:0;
+      width:100%;
+      margin-top:8px;
+      padding:8px 0 4px;
+      border-top:1px solid rgba(253,248,241,.18);
+    }
+    nav ul.open{display:flex}
+    nav ul li{width:100%}
+    nav ul a{
+      display:block;
+      padding:12px 4px;
+      opacity:.9;
+      border-bottom:1px solid rgba(253,248,241,.1);
+    }
+    nav ul li:last-child a{border-bottom:none}
     .menu-list li{flex-direction:row}
   }
 
@@ -494,7 +552,12 @@
 
 <nav>
   <span class="brand">☕ Ember &amp; Oak</span>
-  <ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul id="navMenu">
     <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
     <li><a href="#subscriptions">Subscriptions</a></li>
@@ -660,5 +723,33 @@
 
 <footer>© 2024 Ember &amp; Oak Coffee.</footer>
 
+<script>
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('navMenu');
+    if(!toggle || !menu) return;
+
+    toggle.addEventListener('click', function(){
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    menu.addEventListener('click', function(e){
+      if(e.target.tagName === 'A'){
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+      }
+    });
+
+    window.addEventListener('resize', function(){
+      if(window.innerWidth > 720){
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+      }
+    });
+  })();
+</script>
+
 </body>
+</html</body>
 </html>
